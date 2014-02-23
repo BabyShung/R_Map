@@ -53,7 +53,7 @@ public class ActorGraphNode {
 	}
 
 	/**
-	 * getter
+	 * getter and setter
 	 */
 	public int getBaconNumber() {// get the shortest path length
 		return baconNumber;
@@ -61,6 +61,14 @@ public class ActorGraphNode {
 
 	public String getActorName() {
 		return name;
+	}
+
+	public Set<ActorGraphNode> getLinkedActors() {
+		return linkedActors;
+	}
+
+	public void setBaconNumber(int i) {
+		baconNumber = i;
 	}
 
 }

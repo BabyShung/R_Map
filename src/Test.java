@@ -62,7 +62,7 @@ public class Test {
 		ag.buildLink("Baoluo Meng", "Hao Zheng");
 		ag.buildLink("Dou Hang", "Yuanyuan Jiang");
 
-		int spl = ag.getShorestPathLength("Hao Zheng", "Dou Hang");
+		int spl = ag.getShorestPathLength("Hao Zheng", "Ruoyu Zhang");
 		System.out.println("Shorest path length: " + spl);
 	}
 

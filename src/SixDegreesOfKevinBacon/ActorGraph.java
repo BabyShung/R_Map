@@ -50,8 +50,16 @@ public class ActorGraph {
 			throw new Error("actor doesn't exist!");
 
 		ActorGraphNode fromActor = actors.get(from);
-		fromActor.setBaconNumbers(to);
+		fromActor.setBaconNumbers(to);// BFS method
 		return actors.get(to).getBaconNumber();
 
 	}
+
+	public void resetAll() {
+		// reset bacon number
+		for (ActorGraphNode tmp : actors.values()) {
+			tmp.setBaconNumber(-1);
+		}
+	}
+
 }
