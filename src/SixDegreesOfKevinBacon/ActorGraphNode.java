@@ -40,13 +40,15 @@ public class ActorGraphNode {
 		while (!q.isEmpty()) {
 			current = q.poll();
 			for (ActorGraphNode neighbor : current.linkedActors) {
-				if (neighbor.name == toName) {
-					neighbor.baconNumber = current.baconNumber + 1;
-					return;
-				}
-				if (neighbor.baconNumber == -1) {
-					neighbor.baconNumber = current.baconNumber + 1;
-					q.add(neighbor);
+
+				if (neighbor.baconNumber == -1) {// not visited
+					if (neighbor.name == toName) {// check if we find it
+						neighbor.baconNumber = current.baconNumber + 1;
+						return;
+					} else {
+						neighbor.baconNumber = current.baconNumber + 1;
+						q.add(neighbor);
+					}
 				}
 			}
 		}

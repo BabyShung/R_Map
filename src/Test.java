@@ -64,6 +64,12 @@ public class Test {
 
 		int spl = ag.getShorestPathLength("Hao Zheng", "Ruoyu Zhang");
 		System.out.println("Shorest path length: " + spl);
+		
+		char[] test = {'a','b','c'};
+		String tests = new String(test,0,3);
+		System.out.println(tests);
+		
+		
 	}
 
 }
