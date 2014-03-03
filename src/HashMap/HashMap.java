@@ -59,13 +59,13 @@ import Interfaces.Map;
 public class HashMap<K, V> implements Map<K, V> {
 
 	protected Entry<K, V> available = new HashEntry<K, V>(null, null);
-	protected int size;
+	protected int size;// how many inserted entries
 	protected int prime, capacity;
 	protected Entry<K, V>[] bucket;// array to store the elements
 	protected long scale, shift;
 
 	public HashMap(int capacity) {
-		this(109345121, capacity);
+		this(109345121, capacity);// 109345121 is a prime
 	}
 
 	public HashMap(int prime, int capacity) {
@@ -94,37 +94,41 @@ public class HashMap<K, V> implements Map<K, V> {
 
 	private int findEntry(K key) {
 		int avail = -1;
-		checkKey(key);
-		int i = hashValue(key);
+		checkKey(key);// check null
+		int i = hashValue(key);// hash function *
 		int j = i;
 		do {
 			Entry<K, V> e = bucket[i];
 			if (e == null) {
 				if (avail < 0) {
-					avail = i;
+					avail = i;// key not in table
 				}
 				break;
-			}
-			if (key.equals(e.getKey()))
+			} else if (key.equals(e.getKey()))// find the key
 				return i;
-			if (e == available) {// bucket is deactivated
+			else if (e == available) {// bucket is deactivated, from remove
+										// method
 				if (avail < 0)
-					avail = i;
-			}
-			i = (i + 1) % capacity;
+					avail = i;// remember this slot is available, helpful for
+								// insertion
+			}// else, collide, just increment index
+			i = (i + 1) % capacity;// linear probing *
 		} while (i != j);
+
 		return -(avail + 1);
 	}
 
 	@Override
 	public V put(K key, V value) {
 		int i = findEntry(key);
-		if (i >= 0)
+		if (i >= 0)// replace entries
 			return ((HashEntry<K, V>) bucket[i]).setValue(value);
-		if (size >= capacity / 2) {
+		// insert into new place
+		else if (size >= capacity / 2) {// load factor>=0.5, need rehashing
 			rehash();
 			i = findEntry(key);
 		}
+		// -(i+1), easily find the available place and insert
 		bucket[-i - 1] = new HashEntry<K, V>(key, value);
 		size++;
 		return null;
@@ -134,7 +138,8 @@ public class HashMap<K, V> implements Map<K, V> {
 		capacity *= 2;
 		Entry<K, V>[] old = bucket;
 		bucket = (Entry<K, V>[]) new Entry[capacity];
-		setRandomScaleAndShift();
+		setRandomScaleAndShift();// calling hash function index will be
+									// different
 		for (int i = 0; i < old.length; i++) {
 			Entry<K, V> e = old[i];
 			if ((e != null) && (e != available)) {
@@ -154,7 +159,7 @@ public class HashMap<K, V> implements Map<K, V> {
 	@Override
 	public V remove(K key) {
 		int i = findEntry(key);
-		if (i < 0)
+		if (i < 0)// key not in table
 			return null;
 		V value = bucket[i].getValue();
 		bucket[i] = available;
@@ -201,5 +206,51 @@ public class HashMap<K, V> implements Map<K, V> {
 	public boolean isEmpty() {
 		return size == 0;
 	}
+
+	/**
+	 * a. linear probing b. quadratic probing c. double hashing
+	 */
+	// public Entry<K,V> find (K key)
+	// {
+	// int index = hashFunction (key);
+	// while( hashArray[index] != null)
+	// {
+	// if(hashArray[index].getKey() == key)
+	// return hashArray[index];
+	// index++;
+	// index = index % arraySize;
+	// }
+	// return null;
+	// }
+
+	// public Entry<K,V> find (K key)
+	// {
+	// int increment = 1;
+	// int index = hashFunction (key);
+	// while( hashArray[index] != null)
+	// {
+	// if(hashArray[index].getKey() == key)
+	// return hashArray[index];
+	// index=index+increment;
+	// index = index % arraySize;
+	// increment*=2;
+	// }
+	// return null;
+	// }
+
+	// public Entry<K,V> find (K key)
+	// {
+	// int index = hashFunction (key);
+	// int stepSize = hashFunction2(key);
+	// while( hashArray[index] != null)
+	// {
+	// if(hashArray[index].getKey() == key)
+	// return hashArray[index];
+	// index = index + stepSize;
+	// index = index % arraySize;
+	//
+	// }
+	// return null;
+	// }
 
 }
