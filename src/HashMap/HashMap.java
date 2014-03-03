@@ -3,25 +3,25 @@ package HashMap;
 /**
  * HashMap (important)
  * 
- * ---What is a hashmap?
- * It is a <key,value> data structure that O(1) time to read, write and remove.
- * There is a hash function that maps the key to an array index so that 
- * it can get the value very fast.
+ * ---What is a hash table?
+ * It is a <key,value> data structure that takes O(1) expected time to read, write and remove.
+ * It contains a hash function that maps the key to an array index so that 
+ * it can get the value in a bucket array.
  * 
  * hashmap consists of 2 parts: a bucket array and a hash function
  * 
- * A bucket array is array of objects: Entry, Integer, String, Charater, LinkedList, etc
+ * A bucket array is an array of objects: Entry, Integer, String, Charater, LinkedList, etc
  * A hash function maps the key to an array index, actually:
  * 1.it maps the key to an integer, called hashcode
  * 2.then maps the hashcode to the index of the bucket array by a compression function
  * 
- * ---hashcode:
+ * ---types of hashcode:
  * 1.hashcode in Java
  * 2.poly hashcode, etc
  * 
- * ---compression function:
- * 1.division method: hashcode % bucketCapacity, size should be a prime, 
- * which helps get a uniformly distributed index
+ * ---types of compression function:
+ * PS: bucketCapacity should be a prime, which helps get a uniformly distributed index
+ * 1.division method: hashcode % bucketCapacity      (not good enough)
  * 2.MAD method: [(a*hashcode + b) % largePrimeNumber] % bucketCapacity
  * 
  * ---Collision
@@ -43,9 +43,11 @@ package HashMap;
  * For Separate chaining (much robust) should below 1
  * 
  * Open addressing VS Separate chaining
- * OA: less complicated but become inefficient when load factor >0.5 or 2/3, so it need rehashing.
- * SC: involves with other d.s (linkedlist or array). When capacity is not sure, it's a good choice
-
+ * OA: less complicated but become inefficient when load factor >0.5 or 2/3,
+ *  so it needs rehashing constantly.
+ * SC: involves with other d.s (linkedlist or array). When capacity is not sure, it's a good choice.
+ * 
+ * 
  */
 
 import java.util.ArrayList;
